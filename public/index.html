@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prague Shared Flats - Find Your Perfect Home</title>
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Leaflet Map -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  <!-- ========== NAVIGATION ========== -->
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar-content">
+        <div class="navbar-logo">
+          🏠 Prague Flats
+        </div>
+        
+        <ul class="navbar-menu hidden">
+          <li><a href="#properties">Properties</a></li>
+          <li><a href="#how-it-works">How It Works</a></li>
+          <li><a href="#map">Map</a></li>
+          <li><a href="#footer">Contact</a></li>
+          <li><a href="#" class="navbar-cta">Book Now</a></li>
+        </ul>
+        
+        <div class="hamburger" onclick="toggleMobileMenu()">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========== HERO SECTION ========== -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1 class="hero-title">Find Your Perfect Shared Flat in Prague</h1>
+        <p class="hero-subtitle">Discover comfortable, affordable housing options across Prague's vibrant neighborhoods</p>
+        
+        <form class="hero-search" onsubmit="handleSearch(event)">
+          <input type="date" name="check-in" placeholder="Check-in Date" required>
+          <input type="date" name="check-out" placeholder="Check-out Date" required>
+          <button type="submit">Search</button>
+        </form>
+        
+        <div class="hero-stats">
+          <div class="stat-card">
+            <div class="stat-card-number">500+</div>
+            <div class="stat-card-label">Properties</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-number">2K+</div>
+            <div class="stat-card-label">Happy Users</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-number">24/7</div>
+            <div class="stat-card-label">Support</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FEATURES SECTION ========== -->
+  <section class="features">
+    <div class="container">
+      <h2 class="section-title">Why Choose Us</h2>
+      <p class="section-subtitle">Experience the best in shared living with our carefully curated properties and support</p>
+      
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">✓</div>
+          <h3>Verified Listings</h3>
+          <p>All properties are thoroughly checked and verified to ensure quality and safety for our guests.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">💎</div>
+          <h3>Best Prices</h3>
+          <p>Get the most competitive rates in Prague with transparent pricing and no hidden fees.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">🛡️</div>
+          <h3>Secure Booking</h3>
+          <p>Your bookings are protected with our secure payment system and buyer protection guarantee.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">🚀</div>
+          <h3>Instant Confirmation</h3>
+          <p>Get instant confirmation for most bookings and start your stay immediately with flexible terms.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PROPERTIES SECTION ========== -->
+  <section class="properties" id="properties">
+    <div class="container">
+      <h2 class="section-title">Available Properties</h2>
+      <p class="section-subtitle">Browse our selection of quality apartments and flats</p>
+      
+      <div class="properties-header">
+        <div class="filters">
+          <button class="filter-btn active" data-filter="all">All Properties</button>
+          <button class="filter-btn" data-filter="2-rooms">2 Rooms</button>
+          <button class="filter-btn" data-filter="3-rooms">3 Rooms</button>
+          <button class="filter-btn" data-filter="4plus-rooms">4+ Rooms</button>
+        </div>
+        
+        <div style="display: flex; gap: 1rem; align-items: center;">
+          <label for="type" style="font-weight: 600;">Type:</label>
+          <select name="type" id="type" style="padding: 0.5rem 1rem; border: 2px solid #e0e0e0; border-radius: 0.5rem; font-family: Inter, sans-serif; cursor: pointer;">
+            <option value="">All Types</option>
+            <option value="apartment">Apartment</option>
+            <option value="studio">Studio</option>
+            <option value="house">House</option>
+          </select>
+          
+          <label for="sort" style="font-weight: 600;">Sort:</label>
+          <select name="sort" id="sort" style="padding: 0.5rem 1rem; border: 2px solid #e0e0e0; border-radius: 0.5rem; font-family: Inter, sans-serif; cursor: pointer;">
+            <option value="default">Default</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="rooms-most">Most Rooms</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="properties-grid">
+        <!-- Properties will be loaded here by JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== HOW IT WORKS ========== -->
+  <section class="how-it-works" id="how-it-works">
+    <div class="container">
+      <h2 class="section-title">How It Works</h2>
+      <p class="section-subtitle">Get started in just 4 easy steps</p>
+      
+      <div class="steps-grid">
+        <div class="step-card">
+          <span class="step-number">1</span>
+          <h3>Search & Filter</h3>
+          <p>Enter your dates and preferences to find properties that match your needs perfectly.</p>
+        </div>
+        
+        <div class="step-card">
+          <span class="step-number">2</span>
+          <h3>View Details</h3>
+          <p>Check out detailed information, photos, and reviews for each property on our platform.</p>
+        </div>
+        
+        <div class="step-card">
+          <span class="step-number">3</span>
+          <h3>Book Online</h3>
+          <p>Complete your booking securely with our simple and intuitive booking process.</p>
+        </div>
+        
+        <div class="step-card">
+          <span class="step-number">4</span>
+          <h3>Enjoy Your Stay</h3>
+          <p>Check in and enjoy your stay! Our support team is available 24/7 if you need anything.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== MAP SECTION ========== -->
+  <section class="map-section" id="map">
+    <div class="container">
+      <h2 class="section-title">Properties on Map</h2>
+      <p class="section-subtitle">Explore our properties across Prague</p>
+      
+      <div class="map-container" id="map-container" style="border-radius: 1rem; overflow: hidden; box-shadow: 0 20px 25px rgba(0, 0, 0, 0.15);">
+        <!-- Leaflet map will be initialized here -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>About Us</h4>
+          <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 1rem;">Prague Shared Flats makes it easy to find and book quality accommodation in the heart of Europe.</p>
+          <div class="social-links">
+            <a href="#" class="social-link">f</a>
+            <a href="#" class="social-link">𝕏</a>
+            <a href="#" class="social-link">in</a>
+            <a href="#" class="social-link">📷</a>
+          </div>
+        </div>
+        
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="#properties">Browse Properties</a></li>
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#map">View Map</a></li>
+            <li><a href="#">FAQ</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">Report Issue</a></li>
+            <li><a href="#">Feedback</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Cancellation Policy</a></li>
+            <li><a href="#">Cookie Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2024 Prague Shared Flats. All rights reserved.</p>
+        <p>Made with ❤️ for travelers and locals</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="./js/app.js"></script>
+  
+  <style>
+    /* Fix for map container */
+    #map-container {
+      width: 100%;
+      height: 500px;
+    }
+    
+    @media (max-width: 768px) {
+      #map-container {
+        height: 350px;
+      }
+      
+      .navbar-menu.hidden {
+        display: none;
+      }
+      
+      .navbar-menu:not(.hidden) {
+        position: absolute;
+        top: 60px;
+        left: 0;
+        right: 0;
+        background: white;
+        border-bottom: 1px solid #e0e0e0;
+        flex-direction: column;
+        gap: 0;
+        padding: 1rem 0;
+        display: flex;
+      }
+      
+      .navbar-menu li {
+        padding: 0.5rem 1rem;
+      }
+    }
+  </style>
+</body>
+</html>
